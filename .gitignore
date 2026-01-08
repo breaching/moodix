@@ -34,7 +34,7 @@ eggs/
 lib/
 lib64/
 parts/
-sdist/
+dist/
 var/
 wheels/
 pip-wheel-metadata/
@@ -103,6 +103,7 @@ static/uploads/
 .env.local
 .env.*.local
 node_modules/
+/dist
 .pnpm-store/
 npm-debug.log*
 pnpm-debug.log*
