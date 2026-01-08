@@ -1,0 +1,915 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom utility for input backgrounds that works with CSS variables */
+.bg-input {
+  background-color: var(--input-bg);
+}
+
+/* ============================================================
+   MOODIX - Main Stylesheet
+   Organized CSS with Tailwind + Custom Properties
+   ============================================================ */
+
+/* ============================================================
+   1. THEME SYSTEM - CSS Custom Properties
+   ============================================================ */
+:root {
+  /* Default Dark Theme - Violet */
+  --primary: #8b5cf6;
+  --primary-light: #a78bfa;
+  --primary-dark: #7c3aed;
+  --primary-glow: rgba(139, 92, 246, 0.25);
+
+  /* Secondary accent color (complementary) */
+  --accent: #f59e0b;
+  --accent-light: #fbbf24;
+  --accent-muted: rgba(245, 158, 11, 0.6);
+
+  /* Icon colors that harmonize with primary */
+  --icon-sleep: #a78bfa;
+  --icon-wake: #fbbf24;
+  --icon-exercise: #34d399;
+  --icon-caffeine: #fb923c;
+  --icon-cannabis: #a3e635;
+  --icon-medication: #38bdf8;
+  --icon-custom: #f472b6;
+
+  /* Backgrounds - Rich dark tones */
+  --bg-main: #0a0b10;
+  --bg-card: #12141f;
+  --bg-card-hover: #1a1d2e;
+  --bg-input: #0d0e14;
+  --bg-elevated: #1a1d2e;
+  --bg-overlay: rgba(10, 11, 16, 0.9);
+
+  /* Text - High contrast */
+  --text-main: #f1f5f9;
+  --text-secondary: #a1a9b8;
+  --text-muted: #6b7280;
+  --text-inverse: #0f172a;
+
+  /* Borders - Subtle glow effect */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.12);
+  --border-accent: rgba(139, 92, 246, 0.4);
+  --border-glow: rgba(139, 92, 246, 0.15);
+
+  /* Glass effect */
+  --glass-bg: rgba(18, 20, 31, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Input background with transparency */
+  --input-bg: rgba(10, 11, 16, 0.5);
+
+  /* Status colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+
+  /* Shadows - Deep and immersive */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px var(--primary-glow);
+}
+
+/* Light Mode */
+[data-theme='light'] {
+  --primary: #7c3aed;
+  --primary-light: #8b5cf6;
+  --primary-dark: #6d28d9;
+  --primary-glow: rgba(124, 58, 237, 0.15);
+
+  --accent: #d97706;
+  --accent-light: #f59e0b;
+  --accent-muted: rgba(217, 119, 6, 0.5);
+
+  /* Slightly darker icon colors for light mode */
+  --icon-sleep: #7c3aed;
+  --icon-wake: #d97706;
+  --icon-exercise: #059669;
+  --icon-caffeine: #ea580c;
+  --icon-cannabis: #65a30d;
+  --icon-medication: #0284c7;
+  --icon-custom: #db2777;
+
+  /* Backgrounds - Clean light tones */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --bg-input: #f1f5f9;
+  --bg-elevated: #ffffff;
+  --bg-overlay: rgba(248, 250, 252, 0.95);
+
+  /* Text - Rich dark tones */
+  --text-main: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-inverse: #f8fafc;
+
+  /* Borders - Soft, elegant */
+  --border: rgba(0, 0, 0, 0.08);
+  --border-light: rgba(0, 0, 0, 0.12);
+  --border-accent: rgba(124, 58, 237, 0.3);
+  --border-glow: rgba(124, 58, 237, 0.1);
+
+  /* Glass effect */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.08);
+
+  /* Input background with transparency */
+  --input-bg: rgba(241, 245, 249, 0.7);
+
+  /* Shadows for light mode */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 20px var(--primary-glow);
+}
+
+/* Color Schemes - Each with harmonized accent and icon colors */
+[data-color='blue'] {
+  --primary: #3b82f6;
+  --primary-light: #60a5fa;
+  --primary-dark: #2563eb;
+  --primary-glow: rgba(59, 130, 246, 0.3);
+  --accent: #f472b6;
+  --accent-light: #f9a8d4;
+  --accent-muted: rgba(244, 114, 182, 0.6);
+  --icon-sleep: #60a5fa;
+  --icon-wake: #fbbf24;
+  --icon-exercise: #4ade80;
+  --icon-caffeine: #fb923c;
+  --icon-cannabis: #a3e635;
+  --icon-medication: #22d3ee;
+  --icon-custom: #f472b6;
+}
+
+[data-color='green'] {
+  --primary: #10b981;
+  --primary-light: #34d399;
+  --primary-dark: #059669;
+  --primary-glow: rgba(16, 185, 129, 0.3);
+  --accent: #8b5cf6;
+  --accent-light: #a78bfa;
+  --accent-muted: rgba(139, 92, 246, 0.6);
+  --icon-sleep: #34d399;
+  --icon-wake: #fbbf24;
+  --icon-exercise: #2dd4bf;
+  --icon-caffeine: #fb923c;
+  --icon-cannabis: #a3e635;
+  --icon-medication: #38bdf8;
+  --icon-custom: #a78bfa;
+}
+
+[data-color='rose'] {
+  --primary: #f43f5e;
+  --primary-light: #fb7185;
+  --primary-dark: #e11d48;
+  --primary-glow: rgba(244, 63, 94, 0.3);
+  --accent: #14b8a6;
+  --accent-light: #2dd4bf;
+  --accent-muted: rgba(20, 184, 166, 0.6);
+  --icon-sleep: #fb7185;
+  --icon-wake: #fbbf24;
+  --icon-exercise: #34d399;
+  --icon-caffeine: #fb923c;
+  --icon-cannabis: #a3e635;
+  --icon-medication: #38bdf8;
+  --icon-custom: #c084fc;
+}
+
+[data-color='orange'] {
+  --primary: #f97316;
+  --primary-light: #fb923c;
+  --primary-dark: #ea580c;
+  --primary-glow: rgba(249, 115, 22, 0.3);
+  --accent: #06b6d4;
+  --accent-light: #22d3ee;
+  --accent-muted: rgba(6, 182, 212, 0.6);
+  --icon-sleep: #fb923c;
+  --icon-wake: #fbbf24;
+  --icon-exercise: #34d399;
+  --icon-caffeine: #fbbf24;
+  --icon-cannabis: #a3e635;
+  --icon-medication: #38bdf8;
+  --icon-custom: #f472b6;
+}
+
+/* ============================================================
+   2. BASE STYLES
+   ============================================================ */
+body {
+  @apply m-0 min-h-screen overflow-x-hidden;
+  font-family: 'Outfit', system-ui, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 0.4s ease,
+    color 0.3s ease;
+}
+
+/* Immersive background - uses theme colors */
+body::before {
+  content: '';
+  @apply fixed pointer-events-none;
+  top: -20%;
+  left: -20%;
+  right: -20%;
+  bottom: -20%;
+  background: radial-gradient(ellipse 60% 50% at 30% 20%, var(--primary-glow) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 75% 25%, var(--accent-muted) 0%, transparent 45%),
+    radial-gradient(ellipse 45% 50% at 25% 75%, var(--primary-glow) 0%, transparent 40%);
+  z-index: 0;
+  transition: background 0.5s ease;
+  /* Disabled for performance - using Plasma component instead */
+  /* animation: bgShift 12s ease-in-out infinite; */
+}
+
+#root {
+  @apply relative z-[1];
+}
+
+/* ============================================================
+   3. ANIMATIONS
+   ============================================================ */
+@keyframes bgShift {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(2deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px var(--primary-glow);
+  }
+  50% {
+    box-shadow:
+      0 0 20px var(--primary-glow),
+      0 0 30px var(--primary-glow);
+  }
+}
+
+@keyframes toastEnter {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out;
+}
+.animate-pop-in {
+  animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.animate-scale-bounce {
+  animation: popIn 0.4s ease-out;
+}
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}
+.animate-fade-out {
+  animation: fadeOut 1.5s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.toast-enter {
+  animation: toastEnter 0.3s ease-out;
+}
+
+/* Card animations */
+.card-animated {
+  animation: fadeIn 0.4s ease-out both;
+}
+
+/* Stagger delays */
+.stagger-delay-1 {
+  animation-delay: 0.05s;
+}
+.stagger-delay-2 {
+  animation-delay: 0.1s;
+}
+.stagger-delay-3 {
+  animation-delay: 0.15s;
+}
+.stagger-delay-4 {
+  animation-delay: 0.2s;
+}
+.stagger-delay-5 {
+  animation-delay: 0.25s;
+}
+.stagger-delay-6 {
+  animation-delay: 0.3s;
+}
+
+/* Tab transitions - lightweight opacity-only animation */
+.tab-content,
+.tab-content-reverse {
+  animation: tabFadeIn 0.15s ease-out;
+}
+
+@keyframes tabFadeIn {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+/* ============================================================
+   4. COMPONENT STYLES
+   ============================================================ */
+
+/* Ripple effect */
+.ripple-container {
+  @apply relative overflow-hidden;
+}
+
+.ripple {
+  @apply absolute rounded-full pointer-events-none;
+  background: rgba(255, 255, 255, 0.3);
+  animation: ripple 0.6s ease-out forwards;
+}
+
+/* Glass effect */
+.glass-card {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-modal {
+  background: var(--bg-card);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+/* Buttons */
+.btn-interactive {
+  @apply transition-all duration-200;
+}
+.btn-interactive:active {
+  transform: scale(0.97);
+}
+
+.btn-press:active {
+  transform: scale(0.95);
+}
+
+.glow-primary:hover {
+  box-shadow: 0 0 30px var(--primary-glow);
+}
+
+/* Navigation */
+.nav-btn {
+  @apply relative;
+}
+.nav-btn.active::after {
+  content: '';
+  @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full;
+  background: currentColor;
+}
+
+.nav-arrow-btn:hover {
+  transform: scale(1.05);
+}
+.nav-arrow-btn:active {
+  transform: scale(0.95);
+}
+
+/* Timeline */
+.timeline-slot-active {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-color: var(--primary);
+}
+
+.timeline-slot-connected {
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* Mood indicators */
+.mood-low {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+}
+.mood-medium {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+.mood-high {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.mood-indicator {
+  @apply transition-all duration-300;
+}
+.mood-indicator:hover {
+  transform: scale(1.05);
+}
+
+/* Number animation */
+.number-animate.changed {
+  animation: popIn 0.3s ease-out;
+}
+
+/* Toggle switch */
+.toggle-enhanced {
+  @apply relative w-12 h-7 rounded-full cursor-pointer transition-all duration-300;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+}
+.toggle-enhanced::after {
+  content: '';
+  @apply absolute top-0.5 left-0.5 w-5 h-5 rounded-full transition-all duration-300;
+  background: var(--text-muted);
+}
+.toggle-enhanced.active {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.toggle-enhanced.active::after {
+  transform: translateX(20px);
+  background: white;
+}
+
+/* Input enhancements */
+.input-enhanced {
+  @apply transition-all duration-200;
+}
+
+/* Empty states */
+.empty-state {
+  @apply opacity-60;
+}
+
+/* Gradient text */
+.gradient-text-animated {
+  background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--primary));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Disabled infinite animation for performance */
+}
+
+/* Icon animations - disabled for performance */
+.icon-pulse {
+  /* animation: pulse-glow 2s ease-in-out infinite; */
+}
+
+.icon-spin-slow {
+  /* animation: spin 3s linear infinite; */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sleep icon animations - disabled for performance */
+.sleep-icon-moon {
+  /* animation: float 3s ease-in-out infinite; */
+}
+.sleep-icon-sun {
+  /* animation: float 3s ease-in-out infinite 0.5s; */
+}
+
+/* Consumable animations */
+.consumable-icon {
+  @apply transition-transform duration-200;
+}
+.consumable-row:hover .consumable-icon {
+  transform: scale(1.1);
+}
+/* Disabled infinite animations for performance */
+.consumable-icon-coffee {
+  /* animation: float 2s ease-in-out infinite; */
+}
+.consumable-icon-leaf {
+  /* animation: float 2.5s ease-in-out infinite; */
+}
+.consumable-icon-pill {
+  /* animation: float 2s ease-in-out infinite 0.3s; */
+}
+
+.consumable-tag {
+  @apply transition-all duration-200;
+}
+.consumable-tag:hover {
+  transform: scale(1.05);
+}
+
+/* Stats icon */
+.stats-icon {
+  @apply transition-transform duration-200;
+}
+.stats-icon:hover {
+  transform: scale(1.2);
+}
+
+/* ============================================================
+   4.5 THEMED ICON COLORS
+   ============================================================ */
+/* Icon color classes that follow the current theme */
+.icon-sleep {
+  color: var(--icon-sleep);
+}
+.icon-wake {
+  color: var(--icon-wake);
+}
+.icon-exercise {
+  color: var(--icon-exercise);
+}
+.icon-caffeine {
+  color: var(--icon-caffeine);
+}
+.icon-cannabis {
+  color: var(--icon-cannabis);
+}
+.icon-medication {
+  color: var(--icon-medication);
+}
+.icon-custom {
+  color: var(--icon-custom);
+}
+.icon-primary {
+  color: var(--primary);
+}
+.icon-accent {
+  color: var(--accent);
+}
+
+/* Themed backgrounds for icons */
+.icon-bg-sleep {
+  background-color: color-mix(in srgb, var(--icon-sleep) 15%, transparent);
+  border-color: color-mix(in srgb, var(--icon-sleep) 30%, transparent);
+}
+.icon-bg-exercise {
+  background-color: color-mix(in srgb, var(--icon-exercise) 15%, transparent);
+  border-color: color-mix(in srgb, var(--icon-exercise) 30%, transparent);
+}
+.icon-bg-caffeine {
+  background-color: color-mix(in srgb, var(--icon-caffeine) 15%, transparent);
+  border-color: color-mix(in srgb, var(--icon-caffeine) 30%, transparent);
+}
+.icon-bg-cannabis {
+  background-color: color-mix(in srgb, var(--icon-cannabis) 15%, transparent);
+  border-color: color-mix(in srgb, var(--icon-cannabis) 30%, transparent);
+}
+.icon-bg-medication {
+  background-color: color-mix(in srgb, var(--icon-medication) 15%, transparent);
+  border-color: color-mix(in srgb, var(--icon-medication) 30%, transparent);
+}
+.icon-bg-custom {
+  background-color: color-mix(in srgb, var(--icon-custom) 15%, transparent);
+  border-color: color-mix(in srgb, var(--icon-custom) 30%, transparent);
+}
+
+/* ============================================================
+   5. SCROLLBAR
+   ============================================================ */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-light);
+}
+
+/* ============================================================
+   6. PRINT STYLES
+   ============================================================ */
+.no-print {
+  @apply print:hidden;
+}
+.print-only {
+  display: none;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  body::before,
+  body::after {
+    display: none !important;
+  }
+
+  html,
+  body,
+  #root,
+  #root > div {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .print-only {
+    display: block !important;
+    padding: 10mm !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .no-print,
+  .no-print * {
+    display: none !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .page-break {
+    page-break-before: always;
+    margin-top: 20px;
+    display: block;
+  }
+
+  .print-grid th,
+  .activity-print-table th,
+  .cycle-print-table th {
+    background-color: #f3f4f6 !important;
+  }
+
+  .cell-sleep {
+    background-color: #9ca3af !important;
+    color: black !important;
+  }
+
+  .print-only > *:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Print reset classes */
+.print-reset-bg {
+  background: white;
+  color: black;
+}
+
+.print-reset-text {
+  color: black !important;
+}
+
+/* Print Grid Styles */
+.print-grid th,
+.print-grid td {
+  border: 1px solid #000;
+  text-align: center;
+  padding: 0;
+  font-size: 10px;
+  height: 35px;
+  width: 3.8%;
+  vertical-align: middle;
+  color: black;
+}
+
+.print-grid th {
+  background-color: #f3f4f6 !important;
+  font-weight: bold;
+}
+
+.cell-sleep {
+  background-color: #9ca3af !important;
+  color: #000 !important;
+}
+
+.cell-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  gap: 1px;
+}
+
+.arrow-symbol {
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  line-height: 0.8;
+  position: relative;
+  top: -1px;
+}
+
+.letter-symbol {
+  font-weight: bold;
+  font-size: 11px;
+}
+
+/* Activity & Cycle Print Tables */
+.activity-print-table,
+.cycle-print-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 12px;
+  color: black;
+}
+
+.activity-print-table th,
+.activity-print-table td,
+.cycle-print-table th,
+.cycle-print-table td {
+  border: 1px solid #000;
+  padding: 4px;
+  vertical-align: top;
+}
+
+.activity-print-table th {
+  background-color: #f3f4f6 !important;
+}
+
+.cycle-print-table th {
+  text-align: left;
+  font-size: 11px;
+}
+
+.cycle-print-table td {
+  font-size: 11px;
+}
+
+.cycle-list-item {
+  margin-bottom: 2px;
+}
+
+/* ============================================================
+   7. ACCESSIBILITY
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   8. GLOBAL FOCUS RESET - NO OUTLINES
+   ============================================================ */
+/* Remove ALL focus outlines completely */
+*:focus,
+*:focus-visible,
+*:focus-within,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+a:focus {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none;
+}
+
+/* Remove webkit tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fix date/time input styling - subtle border change only */
+input[type="date"],
+input[type="time"] {
+  outline: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus {
+  border-color: var(--primary);
+}
+
+/* Skip link */
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  clip: rect(0, 0, 0, 0);
+}

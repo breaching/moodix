@@ -1,0 +1,120 @@
+import type { Settings } from '@/types';
+
+// Time slots for activity tracking (6h-2h next day)
+export const TIME_SLOTS = [
+  '6h-7h',
+  '7h-8h',
+  '8h-9h',
+  '9h-10h',
+  '10h-11h',
+  '11h-12h',
+  '12h-13h',
+  '13h-14h',
+  '14h-15h',
+  '15h-16h',
+  '16h-17h',
+  '17h-18h',
+  '18h-19h',
+  '19h-20h',
+  '20h-21h',
+  '21h-22h',
+  '22h-23h',
+  '23h-24h',
+  '24h-1h',
+  '1h-2h',
+] as const;
+
+// 24-hour display for timeline (18h to 17h next day)
+export const DISPLAY_HOURS = [
+  '18h',
+  '19h',
+  '20h',
+  '21h',
+  '22h',
+  '23h',
+  '00h',
+  '01h',
+  '02h',
+  '03h',
+  '04h',
+  '05h',
+  '06h',
+  '07h',
+  '08h',
+  '09h',
+  '10h',
+  '11h',
+  '12h',
+  '13h',
+  '14h',
+  '15h',
+  '16h',
+  '17h',
+] as const;
+
+// Default application settings
+export const DEFAULT_SETTINGS: Settings = {
+  lang: typeof navigator !== 'undefined' && navigator.language.startsWith('fr') ? 'fr' : 'en',
+  theme: 'dark',
+  colorScheme: 'violet',
+  notificationsEnabled: false,
+  notificationTime: '20:00',
+  consumables: [
+    {
+      key: 'exercise',
+      label: 'Exercice',
+      icon: 'Dumbbell',
+      active: true,
+      color: 'icon-exercise',
+      bg: 'icon-bg-exercise',
+      border: '',
+    },
+    {
+      key: 'caffeine',
+      label: 'Caféine',
+      icon: 'Coffee',
+      active: true,
+      color: 'icon-caffeine',
+      bg: 'icon-bg-caffeine',
+      border: '',
+    },
+    {
+      key: 'cannabis',
+      label: 'Cannabis',
+      icon: 'Leaf',
+      active: true,
+      color: 'icon-cannabis',
+      bg: 'icon-bg-cannabis',
+      border: '',
+    },
+    {
+      key: 'medication',
+      label: 'Médicament',
+      icon: 'Pill',
+      active: true,
+      color: 'icon-medication',
+      bg: 'icon-bg-medication',
+      border: '',
+    },
+    {
+      key: 'custom',
+      label: 'Perso',
+      icon: 'Beer',
+      active: false,
+      color: 'icon-custom',
+      bg: 'icon-bg-custom',
+      border: '',
+    },
+  ],
+};
+
+// Icon animation classes mapping
+export const ICON_ANIM_MAP: Record<string, string> = {
+  Coffee: 'consumable-icon-coffee',
+  Leaf: 'consumable-icon-leaf',
+  Beer: 'consumable-icon-wine',
+  Pill: 'consumable-icon-pill',
+  Dumbbell: 'consumable-icon',
+  Cigarette: 'consumable-icon',
+  Skull: 'consumable-icon',
+};
