@@ -30,42 +30,25 @@ interface AuthState {
 export const useAuthStore = create<AuthState>()(
   devtools(
     (set) => ({
-      isAuthenticated: null,
-      isAdmin: false,
-      currentUserId: null,
+      isAuthenticated: true, // Bypass login for GH Pages demo
+      isAdmin: true, // Grant admin rights for the demo to show all UI elements
+      currentUserId: 1, // Use a mock user ID for the demo
 
       checkAuth: async () => {
-        const authData = await api.checkAuth();
-        set({
-          isAuthenticated: authData.authenticated,
-          isAdmin: authData.is_admin || false,
-          currentUserId: authData.user_id || null,
-        });
+        // Do nothing in demo mode
+        set({ isAuthenticated: true, isAdmin: true, currentUserId: 1 });
+        return Promise.resolve();
       },
 
       login: async (username: string, password: string) => {
-        const success = await api.login(username, password);
-        if (success) {
-          set({ isAuthenticated: true });
-          // Re-check auth to get user info
-          const authData = await api.checkAuth();
-          set({
-            isAdmin: authData.is_admin || false,
-            currentUserId: authData.user_id || null,
-          });
-        }
-        return success;
+        // Do nothing in demo mode
+        console.log('Login attempt in demo mode:', username, password);
+        return Promise.resolve(true);
       },
 
       logout: async () => {
-        await api.logout();
-        set({
-          isAuthenticated: false,
-          isAdmin: false,
-          currentUserId: null,
-        });
-        // Clear journal data
-        useJournalStore.getState().clearEntries();
+        // Do nothing in demo mode
+        set({ isAuthenticated: true, isAdmin: true, currentUserId: 1 });
       },
     }),
     { name: 'auth-store' }
