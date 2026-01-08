@@ -1,6 +1,4 @@
-# Moodix
-
-## Journal TCC auto-hébergé
+# Moodix - Journal TCC Auto-hébergé
 
 Application web de **journal numérique** pour la Thérapie Cognitive Comportementale (TCC).
 
@@ -8,41 +6,43 @@ Application web de **journal numérique** pour la Thérapie Cognitive Comporteme
 >
 > Cette application n'est **PAS un outil médical**. Elle sert uniquement de **carnet numérique** pour aider les patients à suivre leurs pensées, émotions et comportements dans le cadre d'un programme TCC **sous supervision professionnelle**.
 
+[Read in English](README.en.md)
+
 ![Aperçu du Tableau de Bord](screenshots/dashboard.png)
 
 ## Fonctionnalités
 
 ### Suivi Quotidien
-- **Sommeil** : Cycles de sommeil avec historique visuel
-- **Activités** : Journal par plage horaire avec scores plaisir/maîtrise/satisfaction
-- **Humeur** : Évaluation quotidienne (0-10)
-- **Consommables** : Tracking personnalisable (exercice, caféine, médicaments...)
+- **Sommeil** : Cycles de sommeil avec historique visuel.
+- **Activités** : Journal par plage horaire avec scores plaisir/maîtrise/satisfaction.
+- **Humeur** : Évaluation quotidienne (0-10).
+- **Consommables** : Tracking personnalisable (exercice, caféine, médicaments...).
 
 ![Interface de Suivi Quotidien](screenshots/daily.png)
 
 ### Cercles Vicieux (Cycles TCC)
-- Analyse structurée des pensées automatiques
-- Documentation : situations, émotions, pensées, comportements, conséquences
+- Analyse structurée des pensées automatiques.
+- Documentation : situations, émotions, pensées, comportements, conséquences.
 
 ![Éditeur de Cercles Vicieux](screenshots/cbt_cycles.png)
 
 ### Analyse & Statistiques
-- Graphiques d'évolution (sommeil, humeur)
-- Top activités par score de plaisir
-- Statistiques hebdomadaires
+- Graphiques d'évolution (sommeil, humeur).
+- Top activités par score de plaisir.
+- Statistiques hebdomadaires.
 
 ### Interface
-- Mode sombre/clair
-- 5 thèmes de couleurs
-- Design responsive mobile-first
-- Animations fluides
+- Mode sombre/clair.
+- 5 thèmes de couleurs.
+- Design responsive mobile-first.
+- Animations fluides.
 
 ### Fonctionnalités Avancées
-- Notifications navigateur programmables
-- Auto-sauvegarde temps réel + mode hors ligne
-- Export PDF personnalisable
-- Import/Export JSON
-- Multi-utilisateurs avec gestion admin
+- Notifications navigateur programmables.
+- Auto-sauvegarde temps réel + mode hors ligne.
+- Export PDF personnalisable.
+- Import/Export JSON.
+- Multi-utilisateurs avec gestion admin.
 
 ## Démarrage Rapide
 
@@ -53,46 +53,50 @@ Application web de **journal numérique** pour la Thérapie Cognitive Comporteme
 ### Installation
 
 ```bash
-# Cloner le repository (exemple)
+# 1. Cloner le repository
 git clone https://github.com/breaching/moodix.git
 cd moodix
 
-# Backend
+# 2. Installer les dépendances Backend
 pip install -r requirements.txt
 
-# Frontend (optionnel - dist/ est déjà inclus)
+# 3. Installer les dépendances Frontend (optionnel, le dossier `dist/` est déjà pré-compilé)
 npm install
 npm run build
 
-# Lancer
+# 4. Lancer le serveur
 python serv.py
 ```
 
-Acces : `http://localhost:5000`
+L'application est maintenant accessible à l'adresse `http://localhost:5000`.
 
-**Identifiants par defaut** : `admin` / `admin`
+**Identifiants par défaut** : `admin` / `admin`
 
-**A CHANGER IMMEDIATEMENT !**
+**IMPORTANT : Changez le mot de passe immédiatement !**
 
 ## Configuration
 
 ### Changer le mot de passe
 
+Pour modifier le mot de passe, exécutez le script `hash_password.py` et copiez le hash généré dans votre fichier `.env`.
+
 ```bash
 python hash_password.py VotreMotDePasseFort
-# Copier le hash dans .env
+# Copiez le hash obtenu
 ```
 
-### Variables d'environnement (.env)
+### Variables d'environnement
+
+Créez un fichier `.env` à la racine du projet (vous pouvez copier/coller depuis `.env.example`).
 
 ```env
 FLASK_ENV=production
 APP_USERNAME=votre_username
-APP_PASSWORD_HASH=<hash_genere>
-SECRET_KEY=<cle_aleatoire_64_chars>
+APP_PASSWORD_HASH=<collez_le_hash_genere_ici>
+SECRET_KEY=<cle_aleatoire_de_64_caracteres>
 ```
 
-Generer SECRET_KEY :
+Pour générer une `SECRET_KEY` sécurisée :
 ```bash
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
@@ -106,24 +110,26 @@ moodix/
 │   ├── stores/             # Stores Zustand
 │   ├── api/                # Client API
 │   └── utils/              # Utilitaires
-├── dist/                   # Build frontend (genere)
+├── dist/                   # Build frontend (généré)
 ├── serv.py                 # Serveur Flask
-├── requirements.txt        # Dependances Python
-├── package.json            # Dependances Node.js
-├── .env.example            # Template configuration
-├── hash_password.py        # Generateur de hash
-├── start.bat               # Script demarrage Windows
-└── start.sh                # Script demarrage Linux/Mac
+├── requirements.txt        # Dépendances Python
+├── package.json            # Dépendances Node.js
+├── .env.example            # Template de configuration
+├── hash_password.py        # Générateur de hash
+├── start.bat               # Script de démarrage Windows
+└── start.sh                # Script de démarrage Linux/Mac
 ```
 
-## Technologies
+## Technologies Utilisées
 
 - **Backend** : Flask, SQLAlchemy, bcrypt
 - **Frontend** : React 18, TypeScript, Tailwind CSS, Zustand
-- **Base de donnees** : SQLite
-- **Build** : Vite
+- **Base de données** : SQLite
+- **Outil de build** : Vite
 
-## Deploiement Production
+## Déploiement en Production
+
+Il est recommandé d'utiliser un serveur WSGI approprié comme Gunicorn ou Waitress.
 
 ### Serveur WSGI
 
@@ -139,13 +145,16 @@ pip install waitress
 waitress-serve --port=5000 serv:app
 ```
 
-### Reverse Proxy (Nginx)
+### Reverse Proxy (Exemple avec Nginx)
+
+L'utilisation d'un reverse proxy comme Nginx est conseillée pour gérer le HTTPS, servir les fichiers statiques et ajouter une couche de sécurité.
 
 ```nginx
 server {
     listen 443 ssl http2;
     server_name votre-domaine.com;
 
+    # Configuration SSL (ex: avec Let's Encrypt)
     ssl_certificate /etc/letsencrypt/live/votre-domaine.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/votre-domaine.com/privkey.pem;
 
@@ -159,175 +168,21 @@ server {
 }
 ```
 
-## Securite
+## Sécurité
 
-**Implemente** :
-- Rate limiting (5 tentatives login / 15min)
-- Validation des entrees
+**Fonctionnalités implémentées** :
+- Limitation de tentatives de connexion (rate limiting)
+- Validation des entrées
 - Protection CSRF
-- Cookies de session securises
-- Protection injection SQL (ORM)
-- Hachage mots de passe (bcrypt)
+- Cookies de session sécurisés
+- Protection contre l'injection SQL (via l'ORM)
+- Hachage des mots de passe (bcrypt)
 
-**A configurer** :
-- HTTPS/SSL (Let's Encrypt)
-- Pare-feu
-- Sauvegardes automatisees
+**À configurer par l'administrateur** :
+- HTTPS/SSL (ex: via Let's Encrypt)
+- Règles de pare-feu
+- Sauvegardes automatisées
 
-## License
+## Licence
 
-MIT License - Voir fichier LICENSE
-
----
-
-# English Version
-
-## Self-hosted CBT Journal
-
-Web application for a **digital journal** for Cognitive Behavioral Therapy (CBT).
-
-> **Medical Disclaimer**
->
-> This application is **NOT a medical tool**. It serves solely as a **digital notebook** to help patients track their thoughts, emotions, and behaviors as part of a CBT program **under professional supervision**.
-
-![Dashboard Overview](screenshots/dashboard.png)
-
-## Features
-
-### Daily Tracking
-- **Sleep**: Sleep cycles with visual history
-- **Activities**: Hourly journal with pleasure/mastery/satisfaction scores
-- **Mood**: Daily evaluation (0-10)
-- **Consumables**: Customizable tracking (exercise, caffeine, medication...)
-
-![Daily Tracking Interface](screenshots/daily.png)
-
-### CBT Cycles (Vicious Cycles)
-- Structured analysis of automatic thoughts
-- Documentation: situations, emotions, thoughts, behaviors, consequences
-
-![CBT Cycles Editor](screenshots/cbt_cycles.png)
-
-### Analysis & Statistics
-- Evolution charts (sleep, mood)
-- Top activities by pleasure score
-- Weekly statistics
-
-![Charts and Statistics](screenshots/stats.png)
-
-### Interface
-- Dark/Light mode
-- 5 color themes
-- Mobile-first responsive design
-- Fluid animations
-
-### Advanced Features
-- Programmable browser notifications
-- Real-time auto-save + offline mode
-- Customizable PDF export
-- JSON Import/Export
-- Multi-user with admin management
-
-## Quick Start
-
-### Prerequisites
-- Python 3.8+
-- Node.js 18+ (for frontend build)
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/breaching/moodix.git
-cd moodix
-
-# Backend
-pip install -r requirements.txt
-
-# Frontend (optional - dist/ is already included)
-npm install
-npm run build
-
-# Start
-python serv.py
-```
-
-Access: `http://localhost:5000`
-
-**Default credentials**: `admin` / `admin`
-
-**CHANGE IMMEDIATELY!**
-
-## Configuration
-
-### Change Password
-
-```bash
-python hash_password.py YourStrongPassword
-# Copy the hash into .env
-```
-
-### Environment Variables (.env)
-
-```env
-FLASK_ENV=production
-APP_USERNAME=your_username
-APP_PASSWORD_HASH=<generated_hash>
-SECRET_KEY=<random_64_chars_key>
-```
-
-Generate SECRET_KEY:
-```bash
-python -c "import secrets; print(secrets.token_hex(32))"
-```
-
-## Project Structure
-
-```
-moodix/
-├── src/                    # React/TypeScript source code
-│   ├── components/         # React Components
-│   ├── stores/             # Zustand Stores
-│   ├── api/                # API Client
-│   └── utils/              # Utilities
-├── dist/                   # Frontend build (generated)
-├── serv.py                 # Flask Server
-├── requirements.txt        # Python Dependencies
-├── package.json            # Node.js Dependencies
-├── .env.example            # Configuration Template
-├── hash_password.py        # Hash Generator
-├── start.bat               # Windows Start Script
-└── start.sh                # Linux/Mac Start Script
-```
-
-## Technologies
-
-- **Backend**: Flask, SQLAlchemy, bcrypt
-- **Frontend**: React 18, TypeScript, Tailwind CSS, Zustand
-- **Database**: SQLite
-- **Build**: Vite
-
-## Production Deployment
-
-### WSGI Server
-
-**Linux/Mac (Gunicorn)**:
-```bash
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:5000 serv:app
-```
-
-**Windows (Waitress)**:
-```bash
-pip install waitress
-waitress-serve --port=5000 serv:app
-```
-
-## Security
-
-**Implemented**:
-- Rate limiting, Input validation, CSRF Protection, Secure session cookies, SQL Injection protection, Password hashing.
-
-## License
-
-MIT License - See LICENSE file
+Ce projet est sous licence MIT. Consultez le fichier `LICENSE` pour plus de détails.
