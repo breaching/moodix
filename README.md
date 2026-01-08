@@ -1,60 +1,66 @@
 # Moodix
 
-## Journal TCC auto-heberge
+## Journal TCC auto-hébergé
 
-Application web de **journal numerique** pour la Therapie Cognitive Comportementale (TCC).
+Application web de **journal numérique** pour la Thérapie Cognitive Comportementale (TCC).
 
-> **Avertissement Medical**
+> **Avertissement Médical**
 >
-> Cette application n'est **PAS un outil medical**. Elle sert uniquement de **carnet numerique** pour aider les patients a suivre leurs pensees, emotions et comportements dans le cadre d'un programme TCC **sous supervision professionnelle**.
+> Cette application n'est **PAS un outil médical**. Elle sert uniquement de **carnet numérique** pour aider les patients à suivre leurs pensées, émotions et comportements dans le cadre d'un programme TCC **sous supervision professionnelle**.
 
-## Fonctionnalites
+![Aperçu du Tableau de Bord](screenshots/dashboard.png)
+
+## Fonctionnalités
 
 ### Suivi Quotidien
 - **Sommeil** : Cycles de sommeil avec historique visuel
-- **Activites** : Journal par plage horaire avec scores plaisir/maitrise/satisfaction
-- **Humeur** : Evaluation quotidienne (0-10)
-- **Consommables** : Tracking personnalisable (exercice, cafeine, medicaments...)
+- **Activités** : Journal par plage horaire avec scores plaisir/maîtrise/satisfaction
+- **Humeur** : Évaluation quotidienne (0-10)
+- **Consommables** : Tracking personnalisable (exercice, caféine, médicaments...)
+
+![Interface de Suivi Quotidien](screenshots/daily.png)
 
 ### Cercles Vicieux (Cycles TCC)
-- Analyse structuree des pensees automatiques
-- Documentation : situations, emotions, pensees, comportements, consequences
+- Analyse structurée des pensées automatiques
+- Documentation : situations, émotions, pensées, comportements, conséquences
+
+![Éditeur de Cercles Vicieux](screenshots/cbt_cycles.png)
 
 ### Analyse & Statistiques
-- Graphiques d'evolution (sommeil, humeur)
-- Top activites par score de plaisir
+- Graphiques d'évolution (sommeil, humeur)
+- Top activités par score de plaisir
 - Statistiques hebdomadaires
 
 ### Interface
 - Mode sombre/clair
-- 5 themes de couleurs
+- 5 thèmes de couleurs
 - Design responsive mobile-first
 - Animations fluides
 
-### Fonctionnalites Avancees
+### Fonctionnalités Avancées
 - Notifications navigateur programmables
-- Auto-sauvegarde temps reel + mode hors ligne
+- Auto-sauvegarde temps réel + mode hors ligne
 - Export PDF personnalisable
 - Import/Export JSON
 - Multi-utilisateurs avec gestion admin
 
-## Demarrage Rapide
+## Démarrage Rapide
 
-### Prerequis
+### Prérequis
 - Python 3.8+
 - Node.js 18+ (pour le build frontend)
 
 ### Installation
 
 ```bash
-# Cloner le repository
-git clone https://github.com/YOUR_USERNAME/moodix.git
+# Cloner le repository (exemple)
+git clone https://github.com/breaching/moodix.git
 cd moodix
 
 # Backend
 pip install -r requirements.txt
 
-# Frontend (optionnel - dist/ est deja inclus)
+# Frontend (optionnel - dist/ est déjà inclus)
 npm install
 npm run build
 
@@ -171,3 +177,157 @@ server {
 ## License
 
 MIT License - Voir fichier LICENSE
+
+---
+
+# English Version
+
+## Self-hosted CBT Journal
+
+Web application for a **digital journal** for Cognitive Behavioral Therapy (CBT).
+
+> **Medical Disclaimer**
+>
+> This application is **NOT a medical tool**. It serves solely as a **digital notebook** to help patients track their thoughts, emotions, and behaviors as part of a CBT program **under professional supervision**.
+
+![Dashboard Overview](screenshots/dashboard.png)
+
+## Features
+
+### Daily Tracking
+- **Sleep**: Sleep cycles with visual history
+- **Activities**: Hourly journal with pleasure/mastery/satisfaction scores
+- **Mood**: Daily evaluation (0-10)
+- **Consumables**: Customizable tracking (exercise, caffeine, medication...)
+
+![Daily Tracking Interface](screenshots/daily.png)
+
+### CBT Cycles (Vicious Cycles)
+- Structured analysis of automatic thoughts
+- Documentation: situations, emotions, thoughts, behaviors, consequences
+
+![CBT Cycles Editor](screenshots/cbt_cycles.png)
+
+### Analysis & Statistics
+- Evolution charts (sleep, mood)
+- Top activities by pleasure score
+- Weekly statistics
+
+![Charts and Statistics](screenshots/stats.png)
+
+### Interface
+- Dark/Light mode
+- 5 color themes
+- Mobile-first responsive design
+- Fluid animations
+
+### Advanced Features
+- Programmable browser notifications
+- Real-time auto-save + offline mode
+- Customizable PDF export
+- JSON Import/Export
+- Multi-user with admin management
+
+## Quick Start
+
+### Prerequisites
+- Python 3.8+
+- Node.js 18+ (for frontend build)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/breaching/moodix.git
+cd moodix
+
+# Backend
+pip install -r requirements.txt
+
+# Frontend (optional - dist/ is already included)
+npm install
+npm run build
+
+# Start
+python serv.py
+```
+
+Access: `http://localhost:5000`
+
+**Default credentials**: `admin` / `admin`
+
+**CHANGE IMMEDIATELY!**
+
+## Configuration
+
+### Change Password
+
+```bash
+python hash_password.py YourStrongPassword
+# Copy the hash into .env
+```
+
+### Environment Variables (.env)
+
+```env
+FLASK_ENV=production
+APP_USERNAME=your_username
+APP_PASSWORD_HASH=<generated_hash>
+SECRET_KEY=<random_64_chars_key>
+```
+
+Generate SECRET_KEY:
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+## Project Structure
+
+```
+moodix/
+├── src/                    # React/TypeScript source code
+│   ├── components/         # React Components
+│   ├── stores/             # Zustand Stores
+│   ├── api/                # API Client
+│   └── utils/              # Utilities
+├── dist/                   # Frontend build (generated)
+├── serv.py                 # Flask Server
+├── requirements.txt        # Python Dependencies
+├── package.json            # Node.js Dependencies
+├── .env.example            # Configuration Template
+├── hash_password.py        # Hash Generator
+├── start.bat               # Windows Start Script
+└── start.sh                # Linux/Mac Start Script
+```
+
+## Technologies
+
+- **Backend**: Flask, SQLAlchemy, bcrypt
+- **Frontend**: React 18, TypeScript, Tailwind CSS, Zustand
+- **Database**: SQLite
+- **Build**: Vite
+
+## Production Deployment
+
+### WSGI Server
+
+**Linux/Mac (Gunicorn)**:
+```bash
+pip install gunicorn
+gunicorn -w 4 -b 0.0.0.0:5000 serv:app
+```
+
+**Windows (Waitress)**:
+```bash
+pip install waitress
+waitress-serve --port=5000 serv:app
+```
+
+## Security
+
+**Implemented**:
+- Rate limiting, Input validation, CSRF Protection, Secure session cookies, SQL Injection protection, Password hashing.
+
+## License
+
+MIT License - See LICENSE file
