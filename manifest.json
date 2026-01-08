@@ -1,0 +1,9 @@
+{
+  "name": "Moodix - Journal TCC",
+  "short_name": "Moodix",
+  "description": "Journal de therapie cognitive comportementale",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f0d1a",
+  "theme_color": "#8b5cf6"
+}
