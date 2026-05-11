@@ -1,160 +1,138 @@
 # Moodix - Self-hosted CBT Journal
 
-A web application for a **digital journal** for Cognitive Behavioral Therapy (CBT).
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.8%2B-blue)
+![Node](https://img.shields.io/badge/node-18%2B-green)
+![React](https://img.shields.io/badge/react-18-61dafb)
 
-> **Medical Disclaimer**
->
-> This application is **NOT a medical tool**. It serves solely as a **digital notebook** to help patients track their thoughts, emotions, and behaviors as part of a CBT program **under professional supervision**.
+Bilingual (FR/EN) web app for digital Cognitive Behavioral Therapy journaling. Designed to be self-hosted by the patient or practitioner.
 
-[Lire en Français](README.md)
+[Lire en français](README.md)
 
-![Dashboard Overview](screenshots/dashboard.png)
+> **Medical disclaimer.** This is not a medical tool. It's a digital notebook to help a patient track thoughts, emotions, and behaviors as part of a CBT program under professional supervision. No automated clinical analysis is produced.
+
+![Dashboard overview](screenshots/dashboard.png)
+
+## Why this project
+
+Commercial CBT apps centralize highly sensitive data with third parties. Moodix deploys on your own infrastructure (VPS, homelab, Raspberry Pi). Data stays with the user, in a local SQLite file.
 
 ## Features
 
-### Daily Tracking
-- **Sleep**: Sleep cycles with visual history
-- **Activities**: Hourly journal with pleasure/mastery/satisfaction scores
-- **Mood**: Daily evaluation (0-10)
-- **Consumables**: Customizable tracking (exercise, caffeine, medication...)
+### Daily tracking
 
-![Daily Tracking Interface](screenshots/daily.png)
+- **Sleep**: cycles with visual history.
+- **Activities**: hourly journal (6 a.m. to 2 a.m. next day) with pleasure / mastery / satisfaction scores.
+- **Mood**: daily evaluation (0 to 10).
+- **Consumables**: configurable tracking (exercise, caffeine, medication, custom).
 
-### CBT Cycles (Vicious Cycles)
-- Structured analysis of automatic thoughts
-- Documentation: situations, emotions, thoughts, behaviors, consequences
+![Daily tracking interface](screenshots/daily.png)
 
-![CBT Cycles Editor](screenshots/cbt_cycles.png)
+### CBT cycles
 
-### Analysis & Statistics
-- Evolution charts (sleep, mood)
-- Top activities by pleasure score
-- Weekly statistics
+Structured analysis of automatic thoughts: situation, emotions, thoughts, behaviors, consequences.
+
+![CBT cycles editor](screenshots/cbt_cycles.png)
+
+### Analysis
+
+- Sleep and mood evolution charts.
+- Top activities by pleasure score.
+- Weekly statistics.
 
 ### Interface
-- Dark/Light mode
-- 5 color themes
-- Mobile-first responsive design
-- Fluid animations
 
-### Advanced Features
-- Programmable browser notifications
-- Real-time auto-save + offline mode
-- Customizable PDF export
-- JSON Import/Export
-- Multi-user with admin management
+- Dark and light mode.
+- 5 color themes (violet, blue, green, rose, orange).
+- Mobile-first responsive.
+- Bilingual FR/EN (auto-detected via `navigator.language`).
 
-## Quick Start
+### Robustness
 
-### Prerequisites
-- Python 3.8+
-- Node.js 18+ (for frontend build)
+- Network-tolerant auto-save: writes are queued in `localStorage`, replayed when the network is back.
+- Multi-user with separate admin role.
+- Customizable PDF export (`reportlab`).
+- JSON import/export for data portability.
 
-### Installation
+## Quick start
+
+Prerequisites: Python 3.8+ and Node.js 18+ (only to rebuild the frontend, `dist/` is already committed).
 
 ```bash
-# Clone the repository
 git clone https://github.com/breaching/moodix.git
 cd moodix
 
-# Backend
 pip install -r requirements.txt
 
-# Frontend (optional - dist/ is already included)
-npm install
-npm run build
+# Frontend optional, already pre-built
+npm install && npm run build
 
-# Start the server
 python serv.py
 ```
 
-Now you can access the application at `http://localhost:5000`.
+App at `http://localhost:5000`.
 
-**Default credentials**: `admin` / `admin`
-
-**IMPORTANT: Change the default password immediately!**
+Default credentials: `admin` / `admin`. Change immediately.
 
 ## Configuration
 
-### Change Password
-
-To change the default password, run the `hash_password.py` script and replace the `APP_PASSWORD_HASH` in your `.env` file.
+### Change the admin password
 
 ```bash
 python hash_password.py YourStrongPassword
-# Copy the generated hash
+# Paste the hash in .env (APP_PASSWORD_HASH)
 ```
 
-### Environment Variables
-
-Create a `.env` file in the root directory by copying the `.env.example` file.
+### Environment variables
 
 ```env
 FLASK_ENV=production
 APP_USERNAME=your_username
-APP_PASSWORD_HASH=<paste_the_generated_hash_here>
-SECRET_KEY=<a_random_64_chars_key>
+APP_PASSWORD_HASH=<generated_hash>
+SECRET_KEY=<random_64_chars>
 ```
 
-To generate a secure `SECRET_KEY`, you can use the following command:
+Generate a secure `SECRET_KEY`:
 ```bash
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-## Project Structure
+## Security
 
-```
-moodix/
-├── src/                    # React/TypeScript source code
-│   ├── components/         # React Components
-│   ├── stores/             # Zustand Stores
-│   ├── api/                # API Client
-│   └── utils/              # Utilities
-├── dist/                   # Frontend build (generated)
-├── serv.py                 # Flask Server
-├── requirements.txt        # Python Dependencies
-├── package.json            # Node.js Dependencies
-├── .env.example            # Configuration Template
-├── hash_password.py        # Hash Generator
-├── start.bat               # Windows Start Script
-└── start.sh                # Linux/Mac Start Script
-```
+Implemented in code:
 
-## Technologies Used
+- bcrypt password hashing.
+- Login rate limiting (`Flask-Limiter`).
+- Input sanitization (`bleach`).
+- CSRF protection via `Origin` header check.
+- Secure session cookies.
+- SQLAlchemy ORM against SQL injection.
 
-- **Backend**: Flask, SQLAlchemy, bcrypt
-- **Frontend**: React 18, TypeScript, Tailwind CSS, Zustand
-- **Database**: SQLite
-- **Build Tool**: Vite
+To configure on the admin side:
 
-## Production Deployment
+- TLS via Let's Encrypt and a reverse proxy.
+- Firewall.
+- Regular SQLite backups.
 
-For production, it is recommended to use a proper WSGI server like Gunicorn or Waitress.
+## Production deployment
 
-### WSGI Server
+WSGI server:
 
-**Linux/Mac (Gunicorn)**:
 ```bash
-pip install gunicorn
+# Linux / Mac
 gunicorn -w 4 -b 0.0.0.0:5000 serv:app
-```
 
-**Windows (Waitress)**:
-```bash
-pip install waitress
+# Windows
 waitress-serve --port=5000 serv:app
 ```
 
-### Reverse Proxy (Example with Nginx)
-
-Using a reverse proxy like Nginx is recommended to handle HTTPS, serve static files, and provide an additional layer of security.
+Nginx reverse proxy:
 
 ```nginx
 server {
     listen 443 ssl http2;
     server_name your-domain.com;
 
-    # SSL configuration (e.g., with Let's Encrypt)
     ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
 
@@ -168,21 +146,16 @@ server {
 }
 ```
 
-## Security
+## Tech stack
 
-**Implemented Features**:
-- Rate limiting on login attempts
-- Input validation
-- CSRF protection
-- Secure session cookies
-- SQL Injection protection (via ORM)
-- Password hashing (bcrypt)
+- **Backend**: Flask 3, SQLAlchemy, bcrypt, Flask-Limiter, bleach, reportlab.
+- **Frontend**: React 18, TypeScript, Tailwind CSS, Zustand, Vite.
+- **Database**: SQLite.
 
-**To be configured by the administrator**:
-- HTTPS/SSL (e.g., using Let's Encrypt)
-- Firewall rules
-- Automated backups
+## Project status
+
+Personal project, maintained irregularly. Issues and PRs welcome, no SLA on responses. For serious clinical use, verify applicable regulatory compliance in your jurisdiction (GDPR, health-data hosting, etc.).
 
 ## License
 
-This project is under the MIT License. See the `LICENSE` file for details.
+MIT, see [LICENSE](LICENSE).

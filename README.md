@@ -1,160 +1,138 @@
-# Moodix - Journal TCC Auto-hébergé
+# Moodix - Journal TCC auto-hébergé
 
-Application web de **journal numérique** pour la Thérapie Cognitive Comportementale (TCC).
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.8%2B-blue)
+![Node](https://img.shields.io/badge/node-18%2B-green)
+![React](https://img.shields.io/badge/react-18-61dafb)
 
-> **Avertissement Médical**
->
-> Cette application n'est **PAS un outil médical**. Elle sert uniquement de **carnet numérique** pour aider les patients à suivre leurs pensées, émotions et comportements dans le cadre d'un programme TCC **sous supervision professionnelle**.
+Application web bilingue (FR/EN) de journal numérique pour la Thérapie Cognitive Comportementale. Conçue pour être auto-hébergée par un patient ou un praticien.
 
 [Read in English](README.en.md)
 
-![Aperçu du Tableau de Bord](screenshots/dashboard.png)
+> **Avertissement médical.** Ce n'est pas un outil médical. C'est un carnet numérique destiné à aider un patient à suivre pensées, émotions et comportements dans le cadre d'un suivi TCC sous supervision professionnelle. Aucune analyse clinique automatisée n'est produite.
+
+![Aperçu du tableau de bord](screenshots/dashboard.png)
+
+## Pourquoi ce projet
+
+Les outils TCC commerciaux centralisent des données très sensibles chez des tiers. Moodix se déploie sur sa propre infra (VPS, homelab, Raspberry Pi). Les données restent chez l'utilisateur, dans une SQLite locale.
 
 ## Fonctionnalités
 
-### Suivi Quotidien
-- **Sommeil** : Cycles de sommeil avec historique visuel.
-- **Activités** : Journal par plage horaire avec scores plaisir/maîtrise/satisfaction.
-- **Humeur** : Évaluation quotidienne (0-10).
-- **Consommables** : Tracking personnalisable (exercice, caféine, médicaments...).
+### Suivi quotidien
 
-![Interface de Suivi Quotidien](screenshots/daily.png)
+- **Sommeil** : cycles avec historique visuel.
+- **Activités** : journal par plage horaire (6h à 2h le lendemain) avec scores plaisir / maîtrise / satisfaction.
+- **Humeur** : évaluation quotidienne (0 à 10).
+- **Consommables** : tracking configurable (exercice, caféine, médicaments, custom).
 
-### Cercles Vicieux (Cycles TCC)
-- Analyse structurée des pensées automatiques.
-- Documentation : situations, émotions, pensées, comportements, conséquences.
+![Interface de suivi quotidien](screenshots/daily.png)
 
-![Éditeur de Cercles Vicieux](screenshots/cbt_cycles.png)
+### Cercles vicieux (cycles TCC)
 
-### Analyse & Statistiques
-- Graphiques d'évolution (sommeil, humeur).
+Analyse structurée des pensées automatiques : situation, émotions, pensées, comportements, conséquences.
+
+![Éditeur de cercles vicieux](screenshots/cbt_cycles.png)
+
+### Analyse
+
+- Graphiques d'évolution sommeil et humeur.
 - Top activités par score de plaisir.
 - Statistiques hebdomadaires.
 
 ### Interface
-- Mode sombre/clair.
-- 5 thèmes de couleurs.
-- Design responsive mobile-first.
-- Animations fluides.
 
-### Fonctionnalités Avancées
-- Notifications navigateur programmables.
-- Auto-sauvegarde temps réel + mode hors ligne.
-- Export PDF personnalisable.
-- Import/Export JSON.
-- Multi-utilisateurs avec gestion admin.
+- Mode sombre et clair.
+- 5 thèmes de couleurs (violet, bleu, vert, rose, orange).
+- Mobile-first responsive.
+- Bilingue FR/EN (détection auto via `navigator.language`).
 
-## Démarrage Rapide
+### Robustesse
 
-### Prérequis
-- Python 3.8+
-- Node.js 18+ (pour le build frontend)
+- Auto-save tolérant aux coupures réseau : les écritures sont mises en file dans `localStorage`, rejouées au retour en ligne.
+- Multi-utilisateurs avec rôle admin distinct.
+- Export PDF personnalisable (via `reportlab`).
+- Import/export JSON pour la portabilité.
 
-### Installation
+## Démarrage rapide
+
+Prérequis : Python 3.8+ et Node.js 18+ (uniquement si rebuild du frontend, `dist/` est déjà committé).
 
 ```bash
-# 1. Cloner le repository
 git clone https://github.com/breaching/moodix.git
 cd moodix
 
-# 2. Installer les dépendances Backend
 pip install -r requirements.txt
 
-# 3. Installer les dépendances Frontend (optionnel, le dossier `dist/` est déjà pré-compilé)
-npm install
-npm run build
+# Frontend optionnel, déjà pré-build
+npm install && npm run build
 
-# 4. Lancer le serveur
 python serv.py
 ```
 
-L'application est maintenant accessible à l'adresse `http://localhost:5000`.
+Application sur `http://localhost:5000`.
 
-**Identifiants par défaut** : `admin` / `admin`
-
-**IMPORTANT : Changez le mot de passe immédiatement !**
+Identifiants par défaut : `admin` / `admin`. À changer immédiatement.
 
 ## Configuration
 
-### Changer le mot de passe
-
-Pour modifier le mot de passe, exécutez le script `hash_password.py` et copiez le hash généré dans votre fichier `.env`.
+### Changer le mot de passe admin
 
 ```bash
 python hash_password.py VotreMotDePasseFort
-# Copiez le hash obtenu
+# Copier le hash dans .env (APP_PASSWORD_HASH)
 ```
 
 ### Variables d'environnement
 
-Créez un fichier `.env` à la racine du projet (vous pouvez copier/coller depuis `.env.example`).
-
 ```env
 FLASK_ENV=production
 APP_USERNAME=votre_username
-APP_PASSWORD_HASH=<collez_le_hash_genere_ici>
-SECRET_KEY=<cle_aleatoire_de_64_caracteres>
+APP_PASSWORD_HASH=<hash_genere>
+SECRET_KEY=<aleatoire_64_chars>
 ```
 
-Pour générer une `SECRET_KEY` sécurisée :
+Générer une `SECRET_KEY` :
 ```bash
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-## Structure du Projet
+## Sécurité
 
-```
-moodix/
-├── src/                    # Code source React/TypeScript
-│   ├── components/         # Composants React
-│   ├── stores/             # Stores Zustand
-│   ├── api/                # Client API
-│   └── utils/              # Utilitaires
-├── dist/                   # Build frontend (généré)
-├── serv.py                 # Serveur Flask
-├── requirements.txt        # Dépendances Python
-├── package.json            # Dépendances Node.js
-├── .env.example            # Template de configuration
-├── hash_password.py        # Générateur de hash
-├── start.bat               # Script de démarrage Windows
-└── start.sh                # Script de démarrage Linux/Mac
-```
+Implémenté côté code :
 
-## Technologies Utilisées
+- Hash bcrypt des mots de passe.
+- Rate limiting sur le login (`Flask-Limiter`).
+- Sanitization des entrées (`bleach`).
+- Protection CSRF via vérification d'`Origin`.
+- Cookies de session sécurisés.
+- ORM SQLAlchemy contre l'injection SQL.
 
-- **Backend** : Flask, SQLAlchemy, bcrypt
-- **Frontend** : React 18, TypeScript, Tailwind CSS, Zustand
-- **Base de données** : SQLite
-- **Outil de build** : Vite
+À configurer côté admin :
 
-## Déploiement en Production
+- TLS via Let's Encrypt et reverse proxy.
+- Firewall.
+- Sauvegardes régulières de la SQLite.
 
-Il est recommandé d'utiliser un serveur WSGI approprié comme Gunicorn ou Waitress.
+## Déploiement production
 
-### Serveur WSGI
+Serveur WSGI :
 
-**Linux/Mac (Gunicorn)** :
 ```bash
-pip install gunicorn
+# Linux / Mac
 gunicorn -w 4 -b 0.0.0.0:5000 serv:app
-```
 
-**Windows (Waitress)** :
-```bash
-pip install waitress
+# Windows
 waitress-serve --port=5000 serv:app
 ```
 
-### Reverse Proxy (Exemple avec Nginx)
-
-L'utilisation d'un reverse proxy comme Nginx est conseillée pour gérer le HTTPS, servir les fichiers statiques et ajouter une couche de sécurité.
+Reverse proxy Nginx :
 
 ```nginx
 server {
     listen 443 ssl http2;
     server_name votre-domaine.com;
 
-    # Configuration SSL (ex: avec Let's Encrypt)
     ssl_certificate /etc/letsencrypt/live/votre-domaine.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/votre-domaine.com/privkey.pem;
 
@@ -168,21 +146,16 @@ server {
 }
 ```
 
-## Sécurité
+## Stack technique
 
-**Fonctionnalités implémentées** :
-- Limitation de tentatives de connexion (rate limiting)
-- Validation des entrées
-- Protection CSRF
-- Cookies de session sécurisés
-- Protection contre l'injection SQL (via l'ORM)
-- Hachage des mots de passe (bcrypt)
+- **Backend** : Flask 3, SQLAlchemy, bcrypt, Flask-Limiter, bleach, reportlab.
+- **Frontend** : React 18, TypeScript, Tailwind CSS, Zustand, Vite.
+- **Base de données** : SQLite.
 
-**À configurer par l'administrateur** :
-- HTTPS/SSL (ex: via Let's Encrypt)
-- Règles de pare-feu
-- Sauvegardes automatisées
+## Statut du projet
+
+Projet personnel, maintenu de manière irrégulière. Issues et PR bienvenues, sans SLA sur les réponses. Pour un usage clinique sérieux, vérifier la conformité réglementaire applicable (RGPD, hébergement de données de santé en France).
 
 ## Licence
 
-Ce projet est sous licence MIT. Consultez le fichier `LICENSE` pour plus de détails.
+MIT, voir [LICENSE](LICENSE).
