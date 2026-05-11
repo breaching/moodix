@@ -45,9 +45,8 @@ Structured analysis of automatic thoughts: situation, emotions, thoughts, behavi
 
 ### Analysis
 
-- Sleep and mood evolution charts.
-- Top activities by pleasure score.
-- Weekly statistics.
+- Weekly aggregate stats: average mood, average sleep hours, total activities, completed days.
+- Top activities ranked by average pleasure score.
 
 ### Interface
 
@@ -60,8 +59,8 @@ Structured analysis of automatic thoughts: situation, emotions, thoughts, behavi
 
 - Network-tolerant auto-save: writes are queued in `localStorage`, replayed when the network is back.
 - Multi-user with separate admin role.
-- Customizable PDF export (`reportlab`).
-- JSON import/export for data portability.
+- PDF export of all journal entries (`reportlab`).
+- JSON export for data portability.
 
 ## Quick start
 
@@ -114,7 +113,7 @@ Implemented in code:
 - Login rate limiting (`Flask-Limiter`).
 - Input sanitization (`bleach`).
 - CSRF protection via `Origin` header check.
-- Secure session cookies.
+- Session cookies: HTTPOnly + SameSite=Lax, Secure flag auto-enabled in production via `FLASK_ENV=production`.
 - SQLAlchemy ORM against SQL injection.
 
 To configure on the admin side:

@@ -45,9 +45,8 @@ Analyse structurée des pensées automatiques : situation, émotions, pensées, 
 
 ### Analyse
 
-- Graphiques d'évolution sommeil et humeur.
-- Top activités par score de plaisir.
-- Statistiques hebdomadaires.
+- Statistiques hebdomadaires : moyenne humeur, moyenne sommeil, total activités, jours complétés.
+- Top activités classées par score de plaisir moyen.
 
 ### Interface
 
@@ -60,8 +59,8 @@ Analyse structurée des pensées automatiques : situation, émotions, pensées, 
 
 - Auto-save tolérant aux coupures réseau : les écritures sont mises en file dans `localStorage`, rejouées au retour en ligne.
 - Multi-utilisateurs avec rôle admin distinct.
-- Export PDF personnalisable (via `reportlab`).
-- Import/export JSON pour la portabilité.
+- Export PDF de toutes les entrées (via `reportlab`).
+- Export JSON pour la portabilité des données.
 
 ## Démarrage rapide
 
@@ -114,7 +113,7 @@ Implémenté côté code :
 - Rate limiting sur le login (`Flask-Limiter`).
 - Sanitization des entrées (`bleach`).
 - Protection CSRF via vérification d'`Origin`.
-- Cookies de session sécurisés.
+- Cookies de session : HTTPOnly + SameSite=Lax, flag Secure auto-activé en production via `FLASK_ENV=production`.
 - ORM SQLAlchemy contre l'injection SQL.
 
 À configurer côté admin :
