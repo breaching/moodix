@@ -5,7 +5,7 @@
 ![Node](https://img.shields.io/badge/node-18%2B-green)
 ![React](https://img.shields.io/badge/react-18-61dafb)
 ![Self-hosted](https://img.shields.io/badge/deploy-self--hosted-purple)
-![Bilingual](https://img.shields.io/badge/i18n-FR%20%2F%20EN-1F6FEB)
+![Bilingual](https://img.shields.io/badge/i18n-EN%20%2F%20FR-1F6FEB)
 
 Bilingual (FR/EN) web app for digital Cognitive Behavioral Therapy journaling. Designed to be self-hosted by the patient or practitioner.
 
