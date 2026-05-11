@@ -1,71 +1,71 @@
-# Moodix - Journal TCC auto-hébergé
+# Moodix - Self-hosted CBT Journal
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Node](https://img.shields.io/badge/node-18%2B-green)
 ![React](https://img.shields.io/badge/react-18-61dafb)
 ![Self-hosted](https://img.shields.io/badge/deploy-self--hosted-purple)
-![Bilingue](https://img.shields.io/badge/i18n-FR%20%2F%20EN-1F6FEB)
+![Bilingual](https://img.shields.io/badge/i18n-FR%20%2F%20EN-1F6FEB)
 
-Application web bilingue (FR/EN) de journal numérique pour la Thérapie Cognitive Comportementale. Conçue pour être auto-hébergée par un patient ou un praticien.
+Bilingual (FR/EN) web app for digital Cognitive Behavioral Therapy journaling. Designed to be self-hosted by the patient or practitioner.
 
-[Read in English](README.en.md)
+[Lire en français](README.fr.md)
 
-> **Avertissement médical.** Ce n'est pas un outil médical. C'est un carnet numérique destiné à aider un patient à suivre pensées, émotions et comportements dans le cadre d'un suivi TCC sous supervision professionnelle. Aucune analyse clinique automatisée n'est produite.
+> **Medical disclaimer.** This is not a medical tool. It's a digital notebook to help a patient track thoughts, emotions, and behaviors as part of a CBT program under professional supervision. No automated clinical analysis is produced.
 
-![Aperçu du tableau de bord](screenshots/dashboard.png)
+![Dashboard overview](screenshots/dashboard.png)
 
-## Pourquoi ce projet
+## Why this project
 
-Les outils TCC commerciaux centralisent des données très sensibles chez des tiers. Moodix se déploie sur sa propre infra (VPS, homelab, Raspberry Pi). Les données restent chez l'utilisateur, dans une SQLite locale.
+Commercial CBT apps centralize highly sensitive data with third parties. Moodix deploys on your own infrastructure (VPS, homelab, Raspberry Pi). Data stays with the user, in a local SQLite file.
 
-## Ce qui le rend particulier
+## What makes it different
 
-- **Données souveraines** : tout vit dans une SQLite locale, sur ton infra. Aucun appel sortant, aucune télémétrie, pas de SaaS au milieu.
-- **Auto-save tolérant aux coupures réseau** : les écritures sont mises en file dans `localStorage` quand le réseau est down, rejouées au retour en ligne. Tu ne perds pas une saisie même si le tunnel VPN tombe pendant que le patient remplit son carnet.
-- **Multi-utilisateurs sans complexité d'auth** : un rôle admin distinct, bcrypt, rate limit Flask-Limiter, protection CSRF via vérification d'`Origin`. Pas de SSO, pas d'OAuth.
-- **Modèle TCC complet** : pas juste un mood tracker. Suivi quotidien (sommeil, activités horaires avec scores plaisir/maîtrise/satisfaction, consommables), cercles vicieux structurés, et statistiques d'évolution.
+- **Data sovereignty**: everything lives in a local SQLite file on your infrastructure. No outbound calls, no telemetry, no SaaS in the middle.
+- **Network-tolerant auto-save**: writes are queued in `localStorage` when the network is down, replayed when it's back. A patient filling their daily log doesn't lose data if the VPN drops mid-session.
+- **Multi-user without auth complexity**: separate admin role, bcrypt, Flask-Limiter rate limiting, CSRF protection via `Origin` header check. No SSO, no OAuth.
+- **Full CBT model**: not just a mood tracker. Daily tracking (sleep, hourly activities with pleasure/mastery/satisfaction scores, consumables), structured vicious cycles, and evolution charts.
 
-## Fonctionnalités
+## Features
 
-### Suivi quotidien
+### Daily tracking
 
-- **Sommeil** : cycles avec historique visuel.
-- **Activités** : journal par plage horaire (6h à 2h le lendemain) avec scores plaisir / maîtrise / satisfaction.
-- **Humeur** : évaluation quotidienne (0 à 10).
-- **Consommables** : tracking configurable (exercice, caféine, médicaments, custom).
+- **Sleep**: cycles with visual history.
+- **Activities**: hourly journal (6 a.m. to 2 a.m. next day) with pleasure / mastery / satisfaction scores.
+- **Mood**: daily evaluation (0 to 10).
+- **Consumables**: configurable tracking (exercise, caffeine, medication, custom).
 
-![Interface de suivi quotidien](screenshots/daily.png)
+![Daily tracking interface](screenshots/daily.png)
 
-### Cercles vicieux (cycles TCC)
+### CBT cycles
 
-Analyse structurée des pensées automatiques : situation, émotions, pensées, comportements, conséquences.
+Structured analysis of automatic thoughts: situation, emotions, thoughts, behaviors, consequences.
 
-![Éditeur de cercles vicieux](screenshots/cbt_cycles.png)
+![CBT cycles editor](screenshots/cbt_cycles.png)
 
-### Analyse
+### Analysis
 
-- Graphiques d'évolution sommeil et humeur.
-- Top activités par score de plaisir.
-- Statistiques hebdomadaires.
+- Sleep and mood evolution charts.
+- Top activities by pleasure score.
+- Weekly statistics.
 
 ### Interface
 
-- Mode sombre et clair.
-- 5 thèmes de couleurs (violet, bleu, vert, rose, orange).
+- Dark and light mode.
+- 5 color themes (violet, blue, green, rose, orange).
 - Mobile-first responsive.
-- Bilingue FR/EN (détection auto via `navigator.language`).
+- Bilingual FR/EN (auto-detected via `navigator.language`).
 
-### Robustesse
+### Robustness
 
-- Auto-save tolérant aux coupures réseau : les écritures sont mises en file dans `localStorage`, rejouées au retour en ligne.
-- Multi-utilisateurs avec rôle admin distinct.
-- Export PDF personnalisable (via `reportlab`).
-- Import/export JSON pour la portabilité.
+- Network-tolerant auto-save: writes are queued in `localStorage`, replayed when the network is back.
+- Multi-user with separate admin role.
+- Customizable PDF export (`reportlab`).
+- JSON import/export for data portability.
 
-## Démarrage rapide
+## Quick start
 
-Prérequis : Python 3.8+ et Node.js 18+ (uniquement si rebuild du frontend, `dist/` est déjà committé).
+Prerequisites: Python 3.8+ and Node.js 18+ (only to rebuild the frontend, `dist/` is already committed).
 
 ```bash
 git clone https://github.com/breaching/moodix.git
@@ -73,59 +73,59 @@ cd moodix
 
 pip install -r requirements.txt
 
-# Frontend optionnel, déjà pré-build
+# Frontend optional, already pre-built
 npm install && npm run build
 
 python serv.py
 ```
 
-Application sur `http://localhost:5000`.
+App at `http://localhost:5000`.
 
-Identifiants par défaut : `admin` / `admin`. À changer immédiatement.
+Default credentials: `admin` / `admin`. Change immediately.
 
 ## Configuration
 
-### Changer le mot de passe admin
+### Change the admin password
 
 ```bash
-python hash_password.py VotreMotDePasseFort
-# Copier le hash dans .env (APP_PASSWORD_HASH)
+python hash_password.py YourStrongPassword
+# Paste the hash in .env (APP_PASSWORD_HASH)
 ```
 
-### Variables d'environnement
+### Environment variables
 
 ```env
 FLASK_ENV=production
-APP_USERNAME=votre_username
-APP_PASSWORD_HASH=<hash_genere>
-SECRET_KEY=<aleatoire_64_chars>
+APP_USERNAME=your_username
+APP_PASSWORD_HASH=<generated_hash>
+SECRET_KEY=<random_64_chars>
 ```
 
-Générer une `SECRET_KEY` :
+Generate a secure `SECRET_KEY`:
 ```bash
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-## Sécurité
+## Security
 
-Implémenté côté code :
+Implemented in code:
 
-- Hash bcrypt des mots de passe.
-- Rate limiting sur le login (`Flask-Limiter`).
-- Sanitization des entrées (`bleach`).
-- Protection CSRF via vérification d'`Origin`.
-- Cookies de session sécurisés.
-- ORM SQLAlchemy contre l'injection SQL.
+- bcrypt password hashing.
+- Login rate limiting (`Flask-Limiter`).
+- Input sanitization (`bleach`).
+- CSRF protection via `Origin` header check.
+- Secure session cookies.
+- SQLAlchemy ORM against SQL injection.
 
-À configurer côté admin :
+To configure on the admin side:
 
-- TLS via Let's Encrypt et reverse proxy.
+- TLS via Let's Encrypt and a reverse proxy.
 - Firewall.
-- Sauvegardes régulières de la SQLite.
+- Regular SQLite backups.
 
-## Déploiement production
+## Production deployment
 
-Serveur WSGI :
+WSGI server:
 
 ```bash
 # Linux / Mac
@@ -135,15 +135,15 @@ gunicorn -w 4 -b 0.0.0.0:5000 serv:app
 waitress-serve --port=5000 serv:app
 ```
 
-Reverse proxy Nginx :
+Nginx reverse proxy:
 
 ```nginx
 server {
     listen 443 ssl http2;
-    server_name votre-domaine.com;
+    server_name your-domain.com;
 
-    ssl_certificate /etc/letsencrypt/live/votre-domaine.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/votre-domaine.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
 
     location / {
         proxy_pass http://127.0.0.1:5000;
@@ -155,16 +155,16 @@ server {
 }
 ```
 
-## Stack technique
+## Tech stack
 
-- **Backend** : Flask 3, SQLAlchemy, bcrypt, Flask-Limiter, bleach, reportlab.
-- **Frontend** : React 18, TypeScript, Tailwind CSS, Zustand, Vite.
-- **Base de données** : SQLite.
+- **Backend**: Flask 3, SQLAlchemy, bcrypt, Flask-Limiter, bleach, reportlab.
+- **Frontend**: React 18, TypeScript, Tailwind CSS, Zustand, Vite.
+- **Database**: SQLite.
 
-## Statut du projet
+## Project status
 
-Projet personnel, maintenu de manière irrégulière. Issues et PR bienvenues, sans SLA sur les réponses. Pour un usage clinique sérieux, vérifier la conformité réglementaire applicable (RGPD, hébergement de données de santé en France).
+Personal project, maintained irregularly. Issues and PRs welcome, no SLA on responses. For serious clinical use, verify applicable regulatory compliance in your jurisdiction (GDPR, health-data hosting, etc.).
 
-## Licence
+## License
 
-MIT, voir [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).
