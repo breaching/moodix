@@ -24,7 +24,7 @@ Les outils TCC commerciaux centralisent des données très sensibles chez des ti
 - **Données souveraines** : tout vit dans une SQLite locale, sur ton infra. Aucun appel sortant, aucune télémétrie, pas de SaaS au milieu.
 - **Auto-save tolérant aux coupures réseau** : les écritures sont mises en file dans `localStorage` quand le réseau est down, rejouées au retour en ligne. Tu ne perds pas une saisie même si le tunnel VPN tombe pendant que le patient remplit son carnet.
 - **Multi-utilisateurs sans complexité d'auth** : un rôle admin distinct, bcrypt, rate limit Flask-Limiter, protection CSRF via vérification d'`Origin`. Pas de SSO, pas d'OAuth.
-- **Modèle TCC complet** : pas juste un mood tracker. Suivi quotidien (sommeil, activités horaires avec scores plaisir/maîtrise/satisfaction, consommables), cercles vicieux structurés, et statistiques d'évolution.
+- **Modèle TCC complet** : pas juste un mood tracker. Suivi quotidien (sommeil, activités horaires avec scores plaisir/maîtrise/satisfaction, consommables), cercles vicieux structurés, et statistiques hebdomadaires agrégées.
 
 ## Fonctionnalités
 
