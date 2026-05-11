@@ -4,6 +4,8 @@
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Node](https://img.shields.io/badge/node-18%2B-green)
 ![React](https://img.shields.io/badge/react-18-61dafb)
+![Self-hosted](https://img.shields.io/badge/deploy-self--hosted-purple)
+![Bilingual](https://img.shields.io/badge/i18n-FR%20%2F%20EN-1F6FEB)
 
 Bilingual (FR/EN) web app for digital Cognitive Behavioral Therapy journaling. Designed to be self-hosted by the patient or practitioner.
 
@@ -16,6 +18,13 @@ Bilingual (FR/EN) web app for digital Cognitive Behavioral Therapy journaling. D
 ## Why this project
 
 Commercial CBT apps centralize highly sensitive data with third parties. Moodix deploys on your own infrastructure (VPS, homelab, Raspberry Pi). Data stays with the user, in a local SQLite file.
+
+## What makes it different
+
+- **Data sovereignty**: everything lives in a local SQLite file on your infrastructure. No outbound calls, no telemetry, no SaaS in the middle.
+- **Network-tolerant auto-save**: writes are queued in `localStorage` when the network is down, replayed when it's back. A patient filling their daily log doesn't lose data if the VPN drops mid-session.
+- **Multi-user without auth complexity**: separate admin role, bcrypt, Flask-Limiter rate limiting, CSRF protection via `Origin` header check. No SSO, no OAuth.
+- **Full CBT model**: not just a mood tracker. Daily tracking (sleep, hourly activities with pleasure/mastery/satisfaction scores, consumables), structured vicious cycles, and evolution charts.
 
 ## Features
 

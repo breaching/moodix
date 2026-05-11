@@ -4,6 +4,8 @@
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Node](https://img.shields.io/badge/node-18%2B-green)
 ![React](https://img.shields.io/badge/react-18-61dafb)
+![Self-hosted](https://img.shields.io/badge/deploy-self--hosted-purple)
+![Bilingue](https://img.shields.io/badge/i18n-FR%20%2F%20EN-1F6FEB)
 
 Application web bilingue (FR/EN) de journal numérique pour la Thérapie Cognitive Comportementale. Conçue pour être auto-hébergée par un patient ou un praticien.
 
@@ -16,6 +18,13 @@ Application web bilingue (FR/EN) de journal numérique pour la Thérapie Cogniti
 ## Pourquoi ce projet
 
 Les outils TCC commerciaux centralisent des données très sensibles chez des tiers. Moodix se déploie sur sa propre infra (VPS, homelab, Raspberry Pi). Les données restent chez l'utilisateur, dans une SQLite locale.
+
+## Ce qui le rend particulier
+
+- **Données souveraines** : tout vit dans une SQLite locale, sur ton infra. Aucun appel sortant, aucune télémétrie, pas de SaaS au milieu.
+- **Auto-save tolérant aux coupures réseau** : les écritures sont mises en file dans `localStorage` quand le réseau est down, rejouées au retour en ligne. Tu ne perds pas une saisie même si le tunnel VPN tombe pendant que le patient remplit son carnet.
+- **Multi-utilisateurs sans complexité d'auth** : un rôle admin distinct, bcrypt, rate limit Flask-Limiter, protection CSRF via vérification d'`Origin`. Pas de SSO, pas d'OAuth.
+- **Modèle TCC complet** : pas juste un mood tracker. Suivi quotidien (sommeil, activités horaires avec scores plaisir/maîtrise/satisfaction, consommables), cercles vicieux structurés, et statistiques d'évolution.
 
 ## Fonctionnalités
 

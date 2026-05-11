@@ -78,7 +78,6 @@ desktop.ini
 *.tar.gz
 *.rar
 mnt/
-.claude/
 
 .pytest_cache/
 .coverage

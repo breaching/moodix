@@ -40,9 +40,8 @@ export const useAuthStore = create<AuthState>()(
         return Promise.resolve();
       },
 
-      login: async (username: string, password: string) => {
-        // Do nothing in demo mode
-        console.log('Login attempt in demo mode:', username, password);
+      login: async (_username: string, _password: string) => {
+        // Demo mode : login is a no-op, any credentials are accepted.
         return Promise.resolve(true);
       },
 
