@@ -1,4 +1,7 @@
 @echo off
+REM Always run from the project root, no matter where the script is called from.
+cd /d "%~dp0"
+
 echo ==========================================
 echo Journal App - Starting...
 echo ==========================================
@@ -16,8 +19,16 @@ call venv\Scripts\activate.bat
 
 REM Install/Update dependencies
 echo Checking dependencies...
-pip install -r requirements.txt --quiet
+pip install -r backend\requirements.txt --quiet
 echo.
+
+REM Build the frontend if dist/ is missing
+if not exist "dist\index.html" (
+    echo Building frontend (one-time, ~30s)...
+    call npm install --silent
+    call npm run build
+    echo.
+)
 
 REM Create necessary directories
 if not exist "logs" mkdir logs
@@ -31,7 +42,7 @@ if not exist ".env" (
     echo WARNING: .env file not found!
     echo Please create .env file from .env.example
     echo Run: copy .env.example .env
-    echo Then generate password hash: python hash_password.py YourPassword
+    echo Then generate password hash: python backend\hash_password.py YourPassword
     echo.
     pause
     exit /b 1
@@ -40,6 +51,6 @@ if not exist ".env" (
 REM Run the app
 echo Starting server...
 echo.
-python serv.py
+python backend\serv.py
 
 pause

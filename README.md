@@ -64,18 +64,27 @@ Structured analysis of automatic thoughts: situation, emotions, thoughts, behavi
 
 ## Quick start
 
-Prerequisites: Python 3.8+ and Node.js 18+ (only to rebuild the frontend, `dist/` is already committed).
+Prerequisites: Python 3.8+ and Node.js 18+.
 
 ```bash
 git clone https://github.com/breaching/moodix.git
 cd moodix
 
-pip install -r requirements.txt
+# Backend deps
+pip install -r backend/requirements.txt
 
-# Frontend optional, already pre-built
+# Frontend deps + build (Flask serves the resulting dist/)
 npm install && npm run build
 
-python serv.py
+# Start the server (serves the built frontend + the API on port 5000)
+python backend/serv.py
+```
+
+Or use the one-shot launcher that handles venv + deps + build + start:
+
+```bash
+./start.sh         # Linux / macOS
+start.bat          # Windows
 ```
 
 App at `http://localhost:5000`.
@@ -87,7 +96,7 @@ Default credentials: `admin` / `admin`. Change immediately.
 ### Change the admin password
 
 ```bash
-python hash_password.py YourStrongPassword
+python backend/hash_password.py YourStrongPassword
 # Paste the hash in .env (APP_PASSWORD_HASH)
 ```
 
@@ -124,14 +133,14 @@ To configure on the admin side:
 
 ## Production deployment
 
-WSGI server:
+WSGI server (run from project root so relative paths resolve correctly):
 
 ```bash
 # Linux / Mac
-gunicorn -w 4 -b 0.0.0.0:5000 serv:app
+gunicorn -w 4 -b 0.0.0.0:5000 --chdir . backend.serv:app
 
 # Windows
-waitress-serve --port=5000 serv:app
+waitress-serve --port=5000 backend.serv:app
 ```
 
 Nginx reverse proxy:

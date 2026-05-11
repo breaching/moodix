@@ -64,18 +64,27 @@ Analyse structurée des pensées automatiques : situation, émotions, pensées, 
 
 ## Démarrage rapide
 
-Prérequis : Python 3.8+ et Node.js 18+ (uniquement si rebuild du frontend, `dist/` est déjà committé).
+Prérequis : Python 3.8+ et Node.js 18+.
 
 ```bash
 git clone https://github.com/breaching/moodix.git
 cd moodix
 
-pip install -r requirements.txt
+# Dépendances backend
+pip install -r backend/requirements.txt
 
-# Frontend optionnel, déjà pré-build
+# Dépendances frontend + build (Flask sert le dist/ généré)
 npm install && npm run build
 
-python serv.py
+# Démarrer le serveur (sert le frontend buildé + l'API sur le port 5000)
+python backend/serv.py
+```
+
+Ou utiliser le launcher tout-en-un qui gère venv + deps + build + start :
+
+```bash
+./start.sh         # Linux / macOS
+start.bat          # Windows
 ```
 
 Application sur `http://localhost:5000`.
@@ -87,7 +96,7 @@ Identifiants par défaut : `admin` / `admin`. À changer immédiatement.
 ### Changer le mot de passe admin
 
 ```bash
-python hash_password.py VotreMotDePasseFort
+python backend/hash_password.py VotreMotDePasseFort
 # Copier le hash dans .env (APP_PASSWORD_HASH)
 ```
 
@@ -124,14 +133,14 @@ Implémenté côté code :
 
 ## Déploiement production
 
-Serveur WSGI :
+Serveur WSGI (à lancer depuis la racine du projet pour que les chemins relatifs résolvent) :
 
 ```bash
 # Linux / Mac
-gunicorn -w 4 -b 0.0.0.0:5000 serv:app
+gunicorn -w 4 -b 0.0.0.0:5000 --chdir . backend.serv:app
 
 # Windows
-waitress-serve --port=5000 serv:app
+waitress-serve --port=5000 backend.serv:app
 ```
 
 Reverse proxy Nginx :
